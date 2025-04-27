@@ -1,7 +1,7 @@
 # Personal Blog Application
 
 A simple yet complete blog application built with Spring Boot, allowing you to create, read, update, and delete blog posts with a commenting system.
-
+This is task from https://roadmap.sh/projects/personal-blog
 ## Features
 
 - **Public Blog Interface:**
@@ -77,7 +77,7 @@ A simple yet complete blog application built with Spring Boot, allowing you to c
 - Maven
 
 ### Running the Application
-it's running for testing here: http://personalblog-9p0w.onrender.com/
+The webapp is running here: http://personalblog-9p0w.onrender.com/
 1. Clone the repository:
 
    ```bash
