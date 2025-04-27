@@ -77,7 +77,7 @@ A simple yet complete blog application built with Spring Boot, allowing you to c
 - Maven
 
 ### Running the Application
-
+it's running for testing here: http://personalblog-9p0w.onrender.com/
 1. Clone the repository:
 
    ```bash
