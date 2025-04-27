@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Blog</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white shadow">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="text-2xl font-bold text-blue-600">Personal Blog</div>
+        <nav class="space-x-6">
+          <a
+            th:href="@{/}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Home</a
+          >
+          <a
+            th:href="@{/about}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >About Me</a
+          >
+          <a
+            th:href="@{/login}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Admin Login</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 flex-1">
+      <h2 class="text-3xl font-bold text-gray-800 mb-10 text-center">
+        Latest Articles
+      </h2>
+
+      <div th:if="${articles.isEmpty()}" class="text-center text-gray-400">
+        <p>No articles available yet. Stay tuned!</p>
+      </div>
+
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          th:each="article : ${articles}"
+          class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition duration-300"
+        >
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">
+              <a
+                th:href="@{/articles/{id}(id=${article.id})}"
+                th:text="${article.title}"
+                class="text-blue-600 hover:underline"
+              ></a>
+            </h3>
+            <p
+              class="text-sm text-gray-400 mb-4"
+              th:text="${#temporals.format(article.publishedAt, 'MMMM dd, yyyy')}"
+            >
+              January 1, 2025
+            </p>
+            <p
+              class="text-gray-700 mb-6"
+              th:text="${#strings.abbreviate(article.content, 150)}"
+            >
+              Article excerpt...
+            </p>
+            <a
+              th:href="@{/articles/{id}(id=${article.id})}"
+              class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              >Read More</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner">
+      <div
+        class="container mx-auto px-6 py-6 text-center text-gray-500 text-sm"
+      >
+        &copy; 2025 Personal Blog. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

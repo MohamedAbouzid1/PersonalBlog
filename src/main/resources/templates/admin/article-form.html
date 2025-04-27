@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title
+      th:text="${article.id == null ? 'Add New Article' : 'Edit Article'} + ' - Personal Blog'"
+    >
+      Article Form - Personal Blog
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white shadow">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="text-2xl font-bold text-blue-600">
+          Personal Blog - Admin
+        </div>
+        <nav class="space-x-6">
+          <a
+            th:href="@{/}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Home</a
+          >
+          <a
+            th:href="@{/admin/dashboard}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Dashboard</a
+          >
+          <a
+            th:href="@{/logout}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Logout</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 flex-1">
+      <div
+        class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden"
+      >
+        <div class="p-8">
+          <h2
+            class="text-3xl font-bold text-gray-800 mb-8"
+            th:text="${article.id == null ? 'Add New Article' : 'Edit Article'}"
+          >
+            Article Form
+          </h2>
+
+          <form
+            th:action="${article.id == null ? '/admin/articles' : '/admin/articles/' + article.id}"
+            th:object="${article}"
+            method="post"
+          >
+            <input
+              type="hidden"
+              th:field="*{id}"
+              th:if="${article.id != null}"
+            />
+            <input
+              type="hidden"
+              th:field="*{publishedAt}"
+              th:if="${article.publishedAt != null}"
+            />
+
+            <div class="mb-6">
+              <label
+                for="title"
+                class="block text-gray-700 text-sm font-bold mb-2"
+                >Title:</label
+              >
+              <input
+                type="text"
+                id="title"
+                th:field="*{title}"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="content"
+                class="block text-gray-700 text-sm font-bold mb-2"
+                >Content:</label
+              >
+              <textarea
+                id="content"
+                th:field="*{content}"
+                rows="15"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              ></textarea>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Save
+              </button>
+              <a
+                th:href="@{/admin/dashboard}"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner">
+      <div
+        class="container mx-auto px-6 py-6 text-center text-gray-500 text-sm"
+      >
+        &copy; 2025 Personal Blog. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

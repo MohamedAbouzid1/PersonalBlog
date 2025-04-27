@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me - Personal Blog</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white shadow">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="text-2xl font-bold text-blue-600">Personal Blog</div>
+        <nav class="space-x-6">
+          <a
+            th:href="@{/}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Home</a
+          >
+          <a
+            th:href="@{/about}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >About Me</a
+          >
+          <a
+            th:href="@{/login}"
+            class="text-gray-600 hover:text-blue-500 font-semibold"
+            >Admin Login</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 flex-1">
+      <section
+        class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden"
+      >
+        <div class="p-8">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">About Me</h2>
+
+          <div class="flex flex-col md:flex-row gap-8 mb-10">
+            <!-- Profile Image -->
+            <div class="w-full md:w-1/3 flex justify-center">
+              <div class="rounded-full overflow-hidden shadow-lg h-48 w-48">
+                <img
+                  th:src="@{/images/abouzid_photo.png}"
+                  alt="Profile Picture"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="w-full md:w-2/3">
+              <h3 class="text-2xl font-semibold text-gray-800 mb-4">
+                Your Name
+              </h3>
+              <p class="text-gray-700 mb-4">
+                Welcome to my blog! I am a passionate developer interested in
+                technology, software engineering, and sharing knowledge with
+                others.
+              </p>
+              <p class="text-gray-700">
+                Feel free to connect with me on social media or reach out via
+                email if you have any questions or would like to collaborate.
+              </p>
+            </div>
+          </div>
+
+          <!-- Skills & Interests -->
+          <div class="mb-10">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+              Skills & Interests
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                >Web Development</span
+              >
+              <span
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                >Java Programming</span
+              >
+              <span
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                >Spring Framework</span
+              >
+              <span
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                >Software Architecture</span
+              >
+              <span
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                >Technical Writing</span
+              >
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+              Contact Information
+            </h3>
+            <div class="space-y-2 text-gray-700">
+              <p class="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                Email: your.email@example.com
+              </p>
+              <p class="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                  />
+                </svg>
+                GitHub:
+                <a
+                  href="https://github.com/yourusername"
+                  target="_blank"
+                  class="text-blue-600 hover:underline"
+                  >github.com/yourusername</a
+                >
+              </p>
+              <p class="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                LinkedIn:
+                <a
+                  href="https://linkedin.com/in/yourprofile"
+                  target="_blank"
+                  class="text-blue-600 hover:underline"
+                  >linkedin.com/in/yourprofile</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner">
+      <div
+        class="container mx-auto px-6 py-6 text-center text-gray-500 text-sm"
+      >
+        &copy; 2025 Personal Blog. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
