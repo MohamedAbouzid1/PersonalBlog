@@ -47,13 +47,26 @@ public class AdminController {
     @GetMapping("/articles/new")
     public String newArticleForm(Model model) {
         model.addAttribute("article", new Article());
+        model.addAttribute("isNewArticle", true);
         return "admin/article-form";
     }
 
     @PostMapping("/articles")
     public String createArticle(@ModelAttribute Article article, RedirectAttributes redirectAttributes) {
-        articleService.createArticle(article);
-        redirectAttributes.addFlashAttribute("message", "Article created successfully!");
+        System.out.println("==== CREATE ARTICLE CONTROLLER METHOD CALLED ====");
+        System.out.println("Article title: " + (article.getTitle() != null ? article.getTitle() : "NULL"));
+        System.out.println("Article content: " + (article.getContent() != null ? "Content present" : "NULL"));
+
+        try {
+            Article saved = articleService.createArticle(article);
+            System.out.println("Article saved, returned ID: " + saved.getId());
+            redirectAttributes.addFlashAttribute("message", "Article created successfully!");
+        } catch (Exception e) {
+            System.err.println("ERROR saving article: " + e.getMessage());
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error saving article: " + e.getMessage());
+        }
+
         return "redirect:/admin/dashboard";
     }
 
@@ -62,6 +75,7 @@ public class AdminController {
         Optional<Article> article = articleService.getArticleById(id);
         if (article.isPresent()) {
             model.addAttribute("article", article.get());
+            model.addAttribute("isNewArticle", false);
             return "admin/article-form";
         } else {
             return "redirect:/admin/dashboard";
@@ -84,5 +98,11 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", "Article not found!");
         }
         return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String testEndpoint() {
+        return "Admin controller test endpoint is working!";
     }
 }

@@ -57,7 +57,7 @@
           </h2>
 
           <form
-            th:action="${article.id == null ? '/admin/articles' : '/admin/articles/' + article.id}"
+            th:action="${isNewArticle ? '/admin/articles' : '/admin/articles/' + article.id}"
             th:object="${article}"
             method="post"
           >

@@ -25,10 +25,19 @@ public class ArticleRepository {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
-        // Create storage directory if it doesn't exist
+        // Determine where files are being saved
         File directory = new File(STORAGE_DIRECTORY);
+        System.out.println("==============================");
+        System.out.println("ARTICLE REPOSITORY INITIALIZATION");
+        System.out.println("Article storage directory: " + directory.getAbsolutePath());
+        System.out.println("Current working directory: " + System.getProperty("user.dir"));
+        System.out.println("Directory exists: " + directory.exists());
+        System.out.println("==============================");
+
+        // Create storage directory if it doesn't exist
         if (!directory.exists()) {
-            directory.mkdirs();
+            boolean created = directory.mkdirs();
+            System.out.println("Directory creation result: " + created);
         }
     }
 
@@ -36,13 +45,21 @@ public class ArticleRepository {
         List<Article> articles = new ArrayList<>();
         File directory = new File(STORAGE_DIRECTORY);
 
+        System.out.println("Looking for articles in: " + directory.getAbsolutePath());
+        System.out.println("Directory exists: " + directory.exists());
+
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".json"));
+        System.out.println("Found " + (files != null ? files.length : 0) + " JSON files");
+
         if (files != null) {
             for (File file : files) {
                 try {
+                    System.out.println("Reading article from: " + file.getName());
                     Article article = objectMapper.readValue(file, Article.class);
                     articles.add(article);
+                    System.out.println("Successfully loaded article: " + article.getTitle());
                 } catch (IOException e) {
+                    System.err.println("ERROR reading article file " + file.getName() + ": " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -65,21 +82,55 @@ public class ArticleRepository {
     }
 
     public Article save(Article article) {
+        System.out.println("==== ARTICLE REPOSITORY SAVE METHOD CALLED ====");
+
         if (article.getId() == null) {
             article.setId(java.util.UUID.randomUUID().toString());
+            System.out.println("Generated new ID for article: " + article.getId());
         }
 
         if (article.getPublishedAt() == null) {
             article.setPublishedAt(LocalDateTime.now());
+            System.out.println("Set publication date for article: " + article.getPublishedAt());
         }
 
         article.setUpdatedAt(LocalDateTime.now());
+        System.out.println("Set updated date for article: " + article.getUpdatedAt());
 
         try {
-            objectMapper.writeValue(
-                    Paths.get(STORAGE_DIRECTORY, article.getId() + ".json").toFile(),
-                    article);
+            Path filePath = Paths.get(STORAGE_DIRECTORY, article.getId() + ".json");
+            System.out.println("Attempting to save article to: " + filePath.toAbsolutePath());
+
+            // Make sure directory exists
+            File directory = new File(STORAGE_DIRECTORY);
+            if (!directory.exists()) {
+                System.out.println("Creating directory: " + directory.getAbsolutePath());
+                boolean created = directory.mkdirs();
+                System.out.println("Directory creation result: " + created);
+            }
+
+            // Try to create an empty file first to test write permissions
+            try {
+                File testFile = new File(directory, "test_write_permissions.txt");
+                boolean testFileCreated = testFile.createNewFile();
+                System.out.println("Test file creation result: " + testFileCreated);
+                if (testFileCreated) {
+                    testFile.delete(); // Clean up
+                }
+            } catch (Exception e) {
+                System.err.println("ERROR creating test file: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            // Now try to write the actual article
+            objectMapper.writeValue(filePath.toFile(), article);
+            System.out.println("Successfully saved article: " + article.getTitle());
+
+            // Verify file was created
+            File checkFile = new File(filePath.toFile().getAbsolutePath());
+            System.out.println("Article file exists after save: " + checkFile.exists());
         } catch (IOException e) {
+            System.err.println("ERROR saving article: " + e.getMessage());
             e.printStackTrace();
         }
 

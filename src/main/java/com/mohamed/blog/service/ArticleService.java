@@ -24,7 +24,10 @@ public class ArticleService {
     }
 
     public List<Article> getAllArticles() {
-        return articleRepository.findAll().stream()
+        System.out.println("Getting all articles...");
+        List<Article> articles = articleRepository.findAll();
+        System.out.println("Found " + articles.size() + " articles");
+        return articles.stream()
                 .sorted(Comparator.comparing(Article::getPublishedAt).reversed())
                 .collect(Collectors.toList());
     }
@@ -34,7 +37,10 @@ public class ArticleService {
     }
 
     public Article createArticle(Article article) {
-        return articleRepository.save(article);
+        System.out.println("Creating article with title: " + article.getTitle());
+        Article saved = articleRepository.save(article);
+        System.out.println("Article created with ID: " + saved.getId());
+        return saved;
     }
 
     public Optional<Article> updateArticle(String id, Article updatedArticle) {

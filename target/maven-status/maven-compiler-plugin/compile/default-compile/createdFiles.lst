@@ -1,4 +1,5 @@
 com/mohamed/blog/model/Comment.class
+com/mohamed/blog/controller/DebugController.class
 com/mohamed/blog/BlogApplication.class
 com/mohamed/blog/repository/ArticleRepository.class
 com/mohamed/blog/controller/GuestController.class
